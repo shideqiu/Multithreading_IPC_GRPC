@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package dfs_service;
+
+service DFSService {
+
+    // Add your service calls here
+
+    // 1. REQUIRED (Parts 1 & 2): A method to store files on the server
+    rpc StoreFile(stream File) returns (StoreRes) {}
+    // 2. REQUIRED (Parts 1 & 2): A method to fetch files from the server
+    rpc FetchFile(FetchRequest) returns (stream File) {}
+    // 3. REQUIRED (Parts 1 & 2): A method to list all files on the server
+    rpc ListFile(ListRequest) returns (ListRes) {}
+    // 4. REQUIRED (Parts 1 & 2): A method to get the status of a file on the server
+    rpc StatusFile(StatusRequest) returns (StatusRes) {}
+    // 5. REQUIRED (Part 2 only): A method to request a write lock from the server
+    rpc WriteLock(WriteLockRequest) returns (WriteLockRes) {}
+    // 6. REQUIRED (Part 2 only): A method named CallbackList to handle asynchronous file listing requests
+    //                            from a client. This method should return a listing of files along with their
+    //                            attribute information. The expected attribute information should include name,
+    //                            size, modified time, and creation time.
+    rpc CallbackList(CallbackListRequest) returns (CallbackListRes) {}
+    // 7. REQUIRED (Part 2 only): A method to delete a file from the server
+    rpc DeleteFile(DeleteRequest) returns (DeleteRes) {}
+    // 8. Any other methods you deem necessary to complete the tasks of this assignment
+
+}
+
+// Add your message types here
+
+message File {
+  string name = 1;
+  int32 size = 2;
+  bytes content = 3;
+  string clientId = 4;
+  uint32 crc = 5;
+}
+
+message StoreRes {}
+
+message FetchRequest {
+  string name = 1;
+}
+
+message DeleteRequest {
+  string name = 1;
+  string clientId = 2;
+}
+
+message DeleteRes {}
+
+message ListRequest {}
+
+message ListRes {
+  repeated FileInfo fileInfo = 1;
+}
+
+message FileInfo {
+  string name = 1;
+  int32 modifiedTime = 2;
+}
+
+message StatusRequest {
+  string name = 1;
+}
+
+message StatusRes {
+  string name = 1;
+  int32 size = 2;
+  int32 modifiedTime = 3;
+  int32 createdTime = 4;
+  uint32 crc = 5;
+}
+
+message WriteLockRequest {
+  string clientId = 1;
+  string name = 2;
+}
+
+message WriteLockRes {}
+
+message CallbackListRequest {
+  string name = 1;
+}
+
+message CallbackListRes {
+  repeated StatusRes statusRes = 1;
+}
