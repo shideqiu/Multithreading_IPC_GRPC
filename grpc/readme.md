@@ -1,8 +1,8 @@
- GRPC and Distributed Systems
+GRPC and Distributed Systems
 
 ## Foreward
 
-In this project, you will design and implement a simple distributed file system (DFS).  First, you will develop several file transfer protocols using gRPC and Protocol Buffers. Next, you will incorporate a weakly consistent synchronization system to manage cache consistency between multiple clients and a single server. The system should be able to handle both binary and text-based files.
+In this project, you will design and implement a simple distributed file system (DFS). First, you will develop several file transfer protocols using gRPC and Protocol Buffers. Next, you will incorporate a weakly consistent synchronization system to manage cache consistency between multiple clients and a single server. The system should be able to handle both binary and text-based files.
 
 Your source code will use a combination of C++14, gRPC, and Protocol Buffers to complete the implementation.
 
@@ -11,21 +11,8 @@ Your source code will use a combination of C++14, gRPC, and Protocol Buffers to 
 You can clone the code in the Project 4 repository with the command:
 
 ```
-git clone https://github.gatech.edu/gios-spr-23/pr4.git
+git clone https://github.com/shideqiu/Multithreading_IPC_GRPC.git
 ```
-
-## Submission Instructions
-
-Submit all code via the Gradescope. For instructions on how to submit individual components of the assignment, see the instructions within [Part 1](docs/part1.md) and [Part 2](docs/part2.md).
-
-
-## Readme
-
-Throughout the project, we encourage you to keep notes on what you have done, how you have approached each part of the project, and what resources you used in preparing your work. We have provided you with a prototype file, `readme-student.md` that you should use throughout the project.
-
-Submit the readmes on Canvas.
-
-> Note: you may choose to submit a PDF version of this file (`readme-student.pdf`) in place of the markdown version. The submission script will automatically detect and submit this file if it is present in the project root directory. If you submit both files, we will give the PDF version preference.
 
 ## Directions
 
@@ -46,6 +33,36 @@ The log utility uses a simple streaming syntax. To use it, make the function cal
 dfs_log(LL_DEBUG) << "Type your message here: " << add_a_variable << ", add more info, etc."
 ```
 
+## Rubric
+
+Your project will be graded at least on the following items:
+
+- Interface specification (.proto)
+- Service implementation
+- gRPC initiation and binding
+- Proper handling of deadline timeouts
+- Proper clean up of memory and gRPC resources
+- Proper communication with the server
+- Proper request and management of write locks
+- Proper synchronization of files between multiple clients and a single server
+- Insightful observations in the Readme file and suggestions for improving the class for future semesters
+
+#### gRPC Implementation
+
+Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks, and proper use of gRPC - including the ability to get, store, and list files, along with the ability to recognize a timeout. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
+
+#### DFS Implementation
+
+Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks, proper use of gRPC, write locks properly handled, cache properly handled, synchronization of sync and inotify threads properly handled, and synchronization of multiple clients to a single server. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
+
+## [README](GRPC_Readme.pdf)
+
+- Clearly demonstrates my understanding of what I did and why.
+- A description of the flow of control for my code.
+- A brief explanation of how you tested your code. (2 points)
+- References any external materials that I consulted during my
+  development process (1 point).
+
 ## References
 
 ### Relevant lecture material
@@ -61,38 +78,3 @@ dfs_log(LL_DEBUG) << "Type your message here: " << add_a_variable << ", add more
 - [Protobuffers Scalar types](https://developers.google.com/protocol-buffers/docs/proto3#scalar)
 - [gRPC Status Codes](https://github.com/grpc/grpc/blob/master/doc/statuscodes.md)
 - [gRPC Deadline](https://grpc.io/blog/deadlines/)
-
-## Rubric
-
-Your project will be graded at least on the following items:
-
-- Interface specification (.proto)
-- Service implementation
-- gRPC initiation and binding
-- Proper handling of deadline timeouts
-- Proper clean up of memory and gRPC resources
-- Proper communication with the server
-- Proper request and management of write locks
-- Proper synchronization of files between multiple clients and a single server
-- Insightful observations in the Readme file and suggestions for improving the class for future semesters
-
-#### gRPC Implementation (35 points)
-
-Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks, and proper use of gRPC  - including the ability to get, store, and list files, along with the ability to recognize a timeout. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
-
-#### DFS Implementation (55 points)
-
-Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks, proper use of gRPC, write locks properly handled, cache properly handled, synchronization of sync and inotify threads properly handled, and synchronization of multiple clients to a single server. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
-
-#### README (10 points + 5 point extra credit opportunity)
-
-* Clearly demonstrates your understanding of what you did and why - we want to see your design and your explanation of the choices that you made and why you made those choices. (4 points)
-* A description of the flow of control for your code; we strongly suggest that you use graphics here, but a thorough textual explanation is sufficient. (2 points)
-* A brief explanation of how you implemented and tested your code. (2 points)
-* References any external materials that you consulted during your development process (2 points)
-* Suggestions on how you would improve the documentation, sample code, testing, or other aspects of the project (up to 5 points extra credit available for noteworthy suggestions here, e.g., actual descriptions of how you would change things, sample code, code for tests, etc.) We do not give extra credit for simply reporting an issue - we're looking for actionable suggestions on how to improve things.
-
-### Questions
-
-For all questions, please use the class Piazza forum or the class Slack channel so that TA's and other students can assist you.
-

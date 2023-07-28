@@ -2,112 +2,54 @@
 
 ## Foreword
 
-This project builds upon Project 1. In Project 1 we took you through a series of steps towards
-building a simplified web server. In _this_ project you will start with a working getfile
+This project builds upon Multithreading Project. In the Multithreading Project, we went through a series of steps towards
+building a simplified web server. In _this_ project we will start with a working getfile
 server and augment it:
 
-1. **Part 1** You will convert this implementation of the getfile server to act as a [proxy server](https://en.wikipedia.org/wiki/Proxy_server).
+1. **Part 1** We will convert this implementation of the getfile server to act as a [proxy server](https://en.wikipedia.org/wiki/Proxy_server).
    This server will accept incoming GETFILE requests and translate them into http requests for another server,
    such as one located on the internet.
-2. **Part 2** You will implement a simple [cache server](https://whatis.techtarget.com/definition/cache-server)
+2. **Part 2** We will implement a simple [cache server](https://whatis.techtarget.com/definition/cache-server)
    that communicates with the proxy via **shared memory**.
    The design of this cache server is intended to permit its use with **multiple** proxy servers.
 
 We have simplified this project by omitting requirements that are typically present in such systems, the most
-notable of which is that **we do not** require you _download and save_ files from the Internet. The servers
-that we have provided to you already implement threading, since you did that in a previous project.
+notable of which is that **we do not** require to _download and save_ files from the Internet. The servers
+that we have provided already implement threading, since we did that in a previous project.
 
 ## Setup
 
 Please follow the instructions given in the [environment](https://github.gatech.edu/gios-spr-23/environment)
-repository for setting up a viable development/test environment. We do not require that you use this
-environment, so please feel free to work in the environment you find most productive. The auto-grader
-uses an environment that is compatible with what we have described.
+repository for setting up a viable development/test environment.
 
 You can clone the code in this repository with the command:
 
 ```
-git clone https://github.gatech.edu/gios-spr-23/pr3.git
+git clone https://github.com/shideqiu/Multithreading_IPC_GRPC.git
 ```
-
-We encourage you to save your code in a separate repository. You can make one in the **gios-spring-23**
-organization. Regardless of where you place your repository, we expect you to keep it private to
-meet the obligations of the honor code.
-
-## Submission Instructions
-
-We are using gradescope as the auto-grading system this semester.
-You can find Gradescope from Canvas, and that will make the submission
-engine available to you. You will need to manually upload your code to
-Gradescope, where it will be executed in its own environment (a Docker
-container) and the results will be gathered up and returned to you.
-
-Note that there is a strict limit to the amount of feedback that we can
-return to you. Thus:
-
-- We do not return feedback for tests that pass
-- We truncate any feedback past the limit (approximately 10KB)
-- We do not return detailed feedback for tests that run after the 10KB limit is reached.
-
-For Parts 1 & 2 you will have a limit of no more than 50 submissions between now
-and the final due date; you may use them all within one day, or you may use
-one per day - the choice is yours.
-
-We strongly encourage you to think about testing your own code. Test driven
-development is a standard technique for software, including systems software.
-The auto-grader is a _grader_ and not a test suite.
-
-Note: your project report (10% of your grade for Project 3) is submitted on
-**Canvas** in PDF format. There is no limit to the number of times you may
-submit your **readme-student.pdf** file.
-
-The Project 3 grading is more extensive than with Project 1. Accordingly, you
-may be used to fairly quick responses. You **may** experience much longer
-wait times with Project 3.
-
-Once again, we strongly encourage you to think about testing your own code. Test driven
-development is a standard technique for software, including systems software.
-The autograder is _not_ your test suite.
-
-### We do not use the "activate" feature
-
-Gradescope includes an "activate" feature that purportedly tells you which version
-of your code you want us to grade; **we do not use this feature**. We always grade
-your last submission prior to the deadline. This is due to the nature of our
-assignments, which can have race conditions; allowing you to run the same code 10
-times and pick the one that worked is antithetical to our learning objectives.
-Thus, we use your last submission. Plan accordingly.
-
-## README
-
-Throughout the project, we encourage you to keep notes on what you have done,
-how you have approached each part of the project and what resources you used in
-preparing your work. We have provided you with a prototype file,
-**readme-student-template.md** that you may use as the basis for this report. You
-are not required to use this format.
 
 ## Part 1
 
-To convert the getfile server into a proxy, you only need to replace the part
+To convert the getfile server into a proxy, we only need to replace the part
 of the code that retrieves the file from disc with code that retrieves it from
 the web. Using the gfserver library provided in the starter code, this is as
 easy as registering a callback. Documentation can be found in the gfserver.h
-file. To implement the callback you should use the [libcurl's “easy” C interface](http://curl.haxx.se/libcurl/c/).
+file. To implement the callback we should use the [libcurl's “easy” C interface](http://curl.haxx.se/libcurl/c/).
 
 ![part1 architecture](docs/part1.png)
 
 **The framework code for part 1 is in the `server` directory.**
 
 This code will handle implementation of the boss-worker multi-threading pattern. This allows
-it to serve multiple connections at once. Note that you don’t have to write your own http
+it to serve multiple connections at once. Note that we don’t have to write our own http
 server. Workloads are provided for files that live on a [GitHub repository](https://github.com/gt-cs6200/image_data).
 Concatenate https://raw.githubusercontent.com/gt-cs6200/image_data with one of
 the paths found in workload.txt to create a valid url.
 **Note: the grading server will not use the same URL.**
-Do not encode this URL into your code or it should fail in the auto-grader.
+Do not encode this URL into the code or it should fail in the auto-grader.
 
 Here is a summary of the relevant files and their roles. **Note** that files which are
-marked "not submitted" are **not** uploaded to gradescope for grading. You can modify them
+marked "not submitted" are **not** uploaded to gradescope for grading. We can modify them
 for debugging purposes, but those changes are not used in the auto-grader.
 
 - **gfclient_download** - a binary executable that serves as a workload generator for the proxy. It downloads the requested files, using the current directory as a prefix for all paths. Note you must specify the correct port to use.
@@ -135,14 +77,10 @@ for debugging purposes, but those changes are not used in the auto-grader.
 
 - **workload.txt** - (not submitted) this file contains a list of files that can be requested of https://github.com/gt-cs6200/image_data as part of your tests.
 
-Once you have completed your program, you can submit it using Gradescope by copying the files we have indicated should
-be submitted. Any additional files you submit will not be used in grading your submission. Any files you fail to
-upload will not be used in grading your submission (and usually mean your code will not compile).
-
 ## Part 2
 
-The objective of this second part of the project is for you to gain experience
-with shared memory-based IPC. You will implement a cache process that will run
+The objective of this second part of the project is to gain experience
+with shared memory-based IPC. We will implement a cache process that will run
 on the same machine as the proxy and communicate with it via shared memory.
 
 ![part2 architecture](docs/part2.png)
@@ -252,6 +190,48 @@ upload will not be used in grading your submission (and usually mean your code w
 Gradescope has a limitation on the number of IPC resources that may be created (esp. message queues). Exceeding those
 limits may result in unexpected test results.
 
+## Expected Result
+
+### Part 1: Sockets
+
+#### Proxy Server: Sockets
+
+- Correctly send client requests to server via curl
+- Correctly send responses back to client using gfserver library
+
+### Part 2: Shared Memory
+
+#### Proxy Server: Shared Memory
+
+- Creation and use of shared memory segments
+- Segment ID communication
+- Cache request generation
+- Cache response processing
+- Synchronization
+- Proper clean up of shared memory resources
+
+#### Cache: Shared Memory
+
+- Segment ID communication
+- Proxy request processing
+- Proxy response processing
+- Synchronization
+
+#### Cache: Command Channel
+
+- Creation of command channel
+- Proper clean up of command channel resources
+
+Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks (file present, end of file, etc.), and proper use of IPC - including the ability to start your cache/proxy in any order. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
+
+## [README](IPC_Readme.pdf)
+
+- Clearly demonstrates my understanding of what I did and why.
+- A description of the flow of control for my code.
+- A brief explanation of how you tested your code. (2 points)
+- References any external materials that I consulted during my
+  development process (1 point).
+
 ## References
 
 ### Relevant Lecture Material
@@ -277,87 +257,3 @@ for your environment.
 Address Sanitizer is not compatible with valgrind. If you wish to use valgrind, you
 should build a version of your code without Address Sanitizer. In most cases, your
 code will be tested with Address Sanitizer enabled.
-
-## Rubric
-
-**Partial Credit** - some tests are run multiple times and credit is awarded
-for successul runs. This is the only partial credit we award. If your code
-did not work but you can explain why fully in your README file, we may give
-you full marks in the README.
-
-In cases where we identify an issue with the grader that impacts your project,
-we may manually adjust the final scores. For example, if we find that your
-code fails to implement required functionality but the grader failed to
-detect this, we may reduce the score. Similarly, if we find an issue with the
-grader that failed to credit you properly, we may adjust the score manually.
-Normally this is done by running a modified version of the grader that is
-corrected. **This is unusual, but has happened in the past.**.
-
-### Part 1: Sockets (35 points)
-
-#### Proxy Server: Sockets
-
-- Correctly send client requests to server via curl
-- Correctly send responses back to client using gfserver library
-
-### Part 2: Shared Memory (55 points)
-
-#### Proxy Server: Shared Memory
-
-- Creation and use of shared memory segments
-- Segment ID communication
-- Cache request generation
-- Cache response processing
-- Synchronization
-- Proper clean up of shared memory resources
-
-#### Cache: Shared Memory
-
-- Segment ID communication
-- Proxy request processing
-- Proxy response processing
-- Synchronization
-
-#### Cache: Command Channel
-
-- Creation of command channel
-- Proper clean up of command channel resources
-
-Full credit requires: code compiles successfully, does not crash, files fully transmitted, basic safety checks (file present, end of file, etc.), and proper use of IPC - including the ability to start your cache/proxy in any order. Note that the automated tests will test some of these automatically, but graders may execute additional tests of these requirements.
-
-### Report (10 points + 5 points Extra Credit)
-
-- README (10 points + 5 point extra credit opportunity)
-  - Clearly demonstrates your understanding of what you did and why - we
-    want to see your _design_ and your explanation of the choices that you
-    made _and why_ you made those choices. (5 points)
-  - A description of the flow of control for your code; we strongly suggest
-    that you use graphics here, but a thorough textual explanation is sufficient.
-    (2 points)
-  - A brief explanation of how you tested your code. (2 points)
-  - References any external materials that you consulted during your
-    development process (1 points)
-  - Suggestions on how you would improve the documentation, sample code,
-    testing, or other aspects of the project (up to 5 points _extra credit_
-    available for noteworthy suggestions here, e.g., actual descriptions of
-    how you would change things, sample code, code for tests, etc.) We do not
-    give extra credit for simply _reporting_ an issue - we're looking for
-    actionable suggestions on how to improve things.
-
-**Ideal README** - the ideal README file is one that you could have picked up
-at the start of the project and used it to guide your development. It would
-explain the choices you considered and _why_ you chose specific approaches
-to the problem. It won't complain about the code, the process, how little you
-know about C, or other things unrelated to the project. It won't discuss the
-_code_; it will discuss the techniques and algorithms.
-
-Thus, a README file that explains the issues you faced, or provides an English
-description of your code, will receive at most half-points. A README file
-that explains what choices you faced, why you chose to implement it how you did,
-how you implemented it, and what your conclusions are about that choice can
-be awarded up to full marks.
-
-## Questions
-
-For all questions, please use the class Piazza forum or Slack Workspace so
-that TAs and other students can assist you.
